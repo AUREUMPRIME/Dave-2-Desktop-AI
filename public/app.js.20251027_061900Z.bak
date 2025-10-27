@@ -1,0 +1,29 @@
+﻿(() => {
+  const div  = document.getElementById("dos");
+  const btn  = document.getElementById("start");
+  const fpsEl= document.getElementById("fps");
+  let started = false, ci = null;
+
+  function onEvent(event, _ci){
+    if (event === "ci-ready") {
+      ci = _ci;
+      try {
+        window.__dave2 = { ci };
+        window.dispatchEvent(new CustomEvent("dave2:ci-ready", { detail: { ci } }));
+      } catch {}
+      const evs = ci?.events?.();
+      evs?.onFps?.(v => { try { fpsEl.textContent = v; } catch {} });
+    }
+  }
+
+  btn?.addEventListener("click", () => {
+    if (started) return; started = true; btn.disabled = true;
+    Dos(div, {
+      url: "/dave2.jsdos",                      // your bundle exists (HTTP 200)
+      pathPrefix: "/vendor/jsdos/emulators/",   // you have wdosbox.{wasm,js}
+      onEvent
+    });
+    console.info("Dos start");
+  });
+})();
+

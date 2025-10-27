@@ -1,0 +1,36 @@
+﻿(() => {
+  const el   = document.querySelector("#dos");
+  const btn  = document.querySelector("#start");
+  const fps  = document.querySelector("#fps");
+  if (el) { el.style.width = "100vw"; el.style.height = "70vh"; }
+  let ci = null;
+
+  function onReady(_ci, player){
+    ci = _ci;
+    try {
+      window.__dave2 = { player, ci };
+      window.dispatchEvent(new CustomEvent("dave2:ci-ready", { detail: { ci, player } }));
+    } catch(_) {}
+    const evs = ci && ci.events ? ci.events() : null;
+    if (evs && evs.onFps) evs.onFps(v => { try { if (fps) fps.textContent = v; } catch(_){} });
+  }
+
+  btn?.addEventListener("click", () => {
+    try {
+      btn.disabled = true;
+      const player = Dos(el, {
+        // Known-good demo bundle to isolate issues
+        url: "https://v8.js-dos.com/bundles/digger.jsdos",
+        // Use official CDN for emulator assets to avoid local 404s
+        pathPrefix: "https://v8.js-dos.com/latest/emulators/",
+        onEvent: (event, _ci) => {
+          console.log("event:", event);
+          if (event === "ci-ready") onReady(_ci, player);
+        }
+      });
+      console.log("Dos start");
+    } catch (e) {
+      document.body.innerHTML = "<pre style=\"color:#f55\">API v8 error: " + (e && e.message ? e.message : e) + "</pre>";
+    }
+  });
+})();

@@ -1,0 +1,23 @@
+﻿(() => {
+  const $ = s => document.querySelector(s);
+  const canvas = $('#dos'), btn = $('#start'), fpsEl = $('#fps');
+
+  btn.addEventListener('click', async () => {
+    try {
+      btn.disabled = true;
+
+      const factory = window.Dos;
+      if (typeof factory !== 'function') throw new Error('Dos not loaded');
+
+      const maybe = factory(canvas, { pathPrefix: "/vendor/jsdos/emulators/" });
+      const player = (typeof maybe?.run === 'function') ? maybe : await maybe;
+
+      const ci = await player.run("/dave2.jsdos");
+      const ev = ci?.events?.();
+      ev?.onFps?.(v => fpsEl.textContent = v);
+    } catch (e) {
+      document.body.innerHTML = `<pre style="color:#f55">API v8 error: ${e}</pre>`;
+      console.error(e);
+    }
+  });
+})();

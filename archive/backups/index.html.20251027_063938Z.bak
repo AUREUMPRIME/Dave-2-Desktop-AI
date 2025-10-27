@@ -1,0 +1,19 @@
+﻿<!doctype html><html><head>
+<meta charset="utf-8">
+<title>Dave-2 Desktop AI</title>
+<link rel="stylesheet" href="https://v8.js-dos.com/latest/js-dos.css">
+</head><body>
+<button id="start">Iniciar</button>
+&nbsp;Agente: <b id="agent">OFF</b> &nbsp;FPS: <span id="fps">-</span>
+<div id="dos" style="width:320px;height:200px"></div>
+
+<!-- emulators + pathPrefix first -->
+<script src="/vendor/jsdos/emulators/emulators.js"></script>
+<script>emulators.pathPrefix="/vendor/jsdos/emulators/";</script>
+
+<!-- v8 runtime -->
+<script src="https://v8.js-dos.com/latest/js-dos.js"></script>
+
+<!-- your code last -->
+<script src="/app.js?b=20251027_061900Z" defer></script>
+</body></html>

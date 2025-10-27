@@ -1,0 +1,33 @@
+﻿(() => {
+  const $ = s => document.querySelector(s);
+  const canvas = $('#dos');
+  const ctx = canvas.getContext('2d', { willReadFrequently: false });
+  const btn = $('#start');
+  const fpsEl = $('#fps');
+
+  let ci = null;
+
+  async function boot(){
+    btn.disabled = true;
+    const resp = await fetch("/dave2.jsdos");
+    if(!resp.ok) throw new Error(`bundle ${resp.status}`);
+    const buf = new Uint8Array(await resp.arrayBuffer());
+
+    // js-dos v8: arrancar DOS en worker y pintar en canvas
+    ci = await emulators.dosWorker(buf);
+    const rgba = new Uint8ClampedArray(320*200*4);
+    ci.events().onFrame((rgb) => {
+      for (let i=0,j=0; i<rgb.length; i+=3, j+=4){
+        rgba[j]=rgb[i]; rgba[j+1]=rgb[i+1]; rgba[j+2]=rgb[i+2]; rgba[j+3]=255;
+      }
+      ctx.putImageData(new ImageData(rgba,320,200),0,0);
+    });
+    if (ci.events().onFps) ci.events().onFps(v => fpsEl.textContent = v);
+  }
+
+  btn.addEventListener('click', () => {
+    boot().catch(e => {
+      document.body.innerHTML = `<pre style="color:#f55">API v8 error: ${e?.message||e}</pre>`;
+    });
+  });
+})();

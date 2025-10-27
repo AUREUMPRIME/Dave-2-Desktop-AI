@@ -1,0 +1,28 @@
+﻿<!-- emulators + pathPrefix first -->
+<script src="/vendor/jsdos/emulators/emulators.js"></script>
+<script>emulators.pathPrefix="/vendor/jsdos/emulators/";</script>
+
+<!-- runtime -->
+<link rel="stylesheet" href="https://v8.js-dos.com/latest/js-dos.css">
+<script src="https://v8.js-dos.com/latest/js-dos.js"></script>
+
+<!-- your code LAST -->
+<script src="/app.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

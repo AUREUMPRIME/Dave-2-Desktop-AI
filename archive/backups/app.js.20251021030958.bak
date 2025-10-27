@@ -1,0 +1,16 @@
+﻿(() => {
+  const $ = s => document.querySelector(s);
+  const btn = $("#start");
+  const fpsEl = $("#fps");
+  const host = document.getElementById("dos");
+
+  btn.addEventListener("click", () => {
+    try{
+      btn.disabled = true;
+      const ci = Dos(host, { url: "/dave2.jsdos" }); // v8 API
+      if (ci?.events && ci.events().onFps) ci.events().onFps(v => fpsEl.textContent = v);
+    }catch(e){
+      document.body.innerHTML = `<pre style="color:#f55">API v8 error: ${e?.message||e}</pre>`;
+    }
+  });
+})();

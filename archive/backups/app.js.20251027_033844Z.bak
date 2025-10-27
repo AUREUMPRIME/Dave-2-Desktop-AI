@@ -1,0 +1,35 @@
+﻿(() => {
+  const q = s => document.querySelector(s);
+  const canvas = q("#dos");
+  const btn = q("#start");
+  const fpsEl = q("#fps");
+  const agentEl = q("#agent");
+  let started = false;
+
+  function onCiReady(ci, player){
+    try{
+      window.__dave2 = { player, ci };
+      window.dispatchEvent(new CustomEvent("dave2:ci-ready", { detail: { ci, player } }));
+      if (agentEl) agentEl.textContent = "ON";
+      const evs = ci && ci.events ? ci.events() : null;
+      if (evs && evs.onFps) evs.onFps(v => { try { fpsEl.textContent = v; } catch(_){ } });
+    }catch(_){}
+  }
+
+  function start(){
+    if (started) return;
+    started = true;
+    try{
+      const player = Dos(canvas, {
+        url: "/dave2.jsdos",
+        pathPrefix: "/vendor/jsdos/emulators/",
+        onEvent: (event, _ci) => { if (event === "ci-ready") onCiReady(_ci, player); }
+      });
+      console.info("Dos start");
+    }catch(e){
+      document.body.innerHTML = "<pre style=\"color:#f55\">API v8 error: " + (e && e.message ? e.message : e) + "</pre>";
+    }
+  }
+
+  if (btn) btn.addEventListener("click", () => { btn.disabled = true; start(); });
+})();

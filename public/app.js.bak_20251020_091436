@@ -1,0 +1,45 @@
+﻿(()=>{const =document.getElementById('btn-start'),
+=document.getElementById('btn-agent'),
+=document.getElementById('fps'),
+=document.getElementById('err'),
+root=document.getElementById('dos-root')||document.getElementById('wallpaper'); // compat
+
+const S={ci:null,running:false,agent:false,last:performance.now()};
+const K={LEFT:37,UP:38,RIGHT:39,DOWN:40,SPACE:32,ENTER:13};
+const err=m=>{.textContent=String(m||'')};
+
+const press=(code,ms=40)=>{ if(!S.ci) return;
+  try{ S.ci.sendKeyEvent(code,true); setTimeout(()=>{ try{S.ci.sendKeyEvent(code,false)}catch(e){} },ms); }catch(e){ err(e) }
+};
+
+async function boot(){
+  try{
+    if(S.running){ err('ya estaba iniciado'); return; }
+    if(!window.crossOriginIsolated){ err('Activando COI… recarga'); return; }
+    // Player API -> CI
+    const props = Dos(root, { pathPrefix:'./vendor/jsdos', renderBackend:'webgl', imageRendering:'pixelated', kiosk:true, noNetworking:true });
+    S.ci = await props.run('./dave2.jsdos');
+    S.ci.events().onMessage((t,...a)=>console.log('[dos]',...a));
+    S.running=true; .textContent='Iniciado'; tick();
+  }catch(e){ err(e) }
+}
+
+function tick(){
+  const n=performance.now(), dt=n-S.last; S.last=n;
+  .textContent='FPS: '+((1000/dt)|0);
+  if(S.agent && S.ci){ agent(); }
+  requestAnimationFrame(tick);
+}
+
+// Bot simple: entra al juego y camina/dispara
+let t=0; function agent(){
+  t++;
+  if(t<240 && t%15===0) press(K.ENTER);   // saltar pantallas iniciales
+  if(t%2===0) press(K.RIGHT);             // avanzar
+  if(t%30===0) press(K.SPACE);            // disparo/salto según juego
+}
+
+.addEventListener('click', async()=>{ await boot(); });
+.addEventListener('click', ()=>{ S.agent=!S.agent; .textContent='Agente: '+(S.agent?'ON':'OFF'); });
+
+})();

@@ -1,0 +1,20 @@
+﻿<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin">
+  <meta http-equiv="Cross-Origin-Embedder-Policy" content="require-corp">
+  <link rel="stylesheet" href="/style.css?b=20251021030048">
+  <title>Dave-2 Desktop AI</title>
+</head>
+<body>
+  <button id="start">Iniciar</button>
+  <span>Agente: <b id="agent">OFF</b>  FPS: <span id="fps">-</span></span>
+  <canvas id="dos" width="640" height="400"></canvas>
+
+  <script src="/vendor/jsdos/emulators/emulators.js?b=20251021030048"></script>
+  <script>emulators.pathPrefix="/vendor/jsdos/emulators/";</script>
+  <script src="/vendor/jsdos/js-dos.js?b=20251021030048"></script>
+  <script src="/app.js?b=20251021030048"></script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+﻿(() => {
+  const div=document.getElementById("dos");
+  const btn=document.getElementById("start");
+  const fps=document.getElementById("fps");
+  const agent=document.getElementById("agent");
+  let started=false;
+
+  function onEvent(event, _ci){
+    if(event==="ci-ready"){
+      try{
+        window.__dave2={ci:_ci};
+        window.dispatchEvent(new CustomEvent("dave2:ci-ready",{detail:{ci:_ci}}));
+        if(agent) agent.textContent="ON";
+        _ci?.events?.()?.onFps?.(v=>{ try{ fps.textContent=v }catch{} });
+      }catch{}
+    }
+  }
+
+  btn?.addEventListener("click", ()=>{
+    if(started) return; started=true; btn.disabled=true;
+    Dos(div,{ url:"/dave2.jsdos", onEvent });
+    console.info("Dos start");
+  });
+})();

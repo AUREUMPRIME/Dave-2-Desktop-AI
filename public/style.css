@@ -1,10 +1,8 @@
-﻿html,body{height:100%;margin:0;background:#111;color:#eee;font-family:ui-sans-serif,system-ui,Segoe UI,Arial}
-#wallpaper{position:fixed;inset:0}
-#dos-canvas{width:100vw;height:100vh;display:block;background:#000}
-#hud{position:fixed;left:16px;bottom:16px;z-index:10;display:flex;gap:8px;align-items:center}
-#hud button{background:#222;color:#eee;border:1px solid #555;border-radius:8px;padding:8px 12px}
-#fps{margin-left:8px;opacity:.8}
-#err{position:fixed;right:16px;bottom:64px;z-index:11;max-width:48ch;background:rgba(0,0,0,.6);color:#f55;padding:6px 8px;border-radius:8px;font:12px ui-monospace,monospace}
- 
-/* override HUD */
-#hud{position:fixed;left:16px;bottom:16px;z-index:9999;display:flex;gap:8px;align-items:center}
+﻿html,body{background:#111;color:#ddd;font:14px/1.4 system-ui;margin:0}
+main{padding:16px}
+#dos{width:640px;height:400px}
+button{padding:.45rem .9rem}
+
+/* auto-appended 20251027_063938Z */
+html,body{height:100%;margin:0;background:#0f1720;color:#cbd5e1}
+#dos{width:100vw;height:100vh;image-rendering:pixelated;image-rendering:crisp-edges}

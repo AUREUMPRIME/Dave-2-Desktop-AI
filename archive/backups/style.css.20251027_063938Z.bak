@@ -1,0 +1,4 @@
+﻿html,body{background:#111;color:#ddd;font:14px/1.4 system-ui;margin:0}
+main{padding:16px}
+#dos{width:640px;height:400px}
+button{padding:.45rem .9rem}

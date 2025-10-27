@@ -1,0 +1,24 @@
+﻿(() => {
+  const $ = s => document.querySelector(s);
+  const canvas = #dos;
+  const btn    = #start;
+  const fpsEl  = #fps;
+
+  btn.addEventListener('click', () => {
+    btn.disabled = true;
+
+    // v8: se pasa el bundle en options.url y se fija pathPrefix.
+    // No existe player.run en v8 (ver Player API).
+    Dos(canvas, {
+      url: "/dave2.jsdos",
+      pathPrefix: "/vendor/jsdos/emulators/",
+      autoStart: true,
+      onEvent: (event, ci) => {
+        if (event === "ci-ready" && ci?.events) {
+          const ev = ci.events();
+          if (ev?.onFps) ev.onFps(v => fpsEl.textContent = v);
+        }
+      }
+    });
+  });
+})();

@@ -1,0 +1,16 @@
+﻿const $ = s => document.querySelector(s);
+const canvas = $('#dos');
+const btn = $('#start');
+const fpsEl = $('#fps');
+
+btn.addEventListener('click', async () => {
+  try {
+    btn.disabled = true;
+    const player = Dos(canvas);                 // v8 player
+    const ci = await player.run('/dave2.jsdos'); // carga el bundle
+    ci.events().on('onFrame', () => {});        // opcional
+    ci.events().on('fps', v => fpsEl.textContent = v);
+  } catch (e) {
+    document.body.innerHTML = `<pre style="color:#f55">API v8 error: ${e?.message || e}</pre>`;
+  }
+});

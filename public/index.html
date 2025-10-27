@@ -1,11 +1,16 @@
-﻿<!doctype html><html lang="es"><head><meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Dave 2 • Fondo vivo</title>
-<link rel="stylesheet" href="./style.css?b=B_20251020_082143"/></head>
-<body>
-<div id="wallpaper"><canvas id="dos-canvas"></canvas></div>
-<div id="hud"><button id="btn-start">Iniciar</button><button id="btn-agent">Agente: OFF</button><span id="fps">FPS: —</span></div>
-<div id="err"></div>
-<script src="./vendor/jsdos/emulators/emulators.js?b=B_20251020_082143"></script>
-<script src="./app.js?b=B_20251020_082143"></script>
+﻿<!doctype html><html><head>
+<meta charset="utf-8">
+<title>Dave-2 Desktop AI</title>
+<style>
+  html,body{height:100%;margin:0;background:#0e1620}
+  #dos{display:block;width:100vw;height:100vh;image-rendering:pixelated;image-rendering:crisp-edges}
+</style>
+<script src="/vendor/jsdos/emulators/emulators.js"></script>
+<script>emulators.pathPrefix="/vendor/jsdos/emulators/";</script>
+<link rel="stylesheet" href="https://v8.js-dos.com/latest/js-dos.css">
+<script src="https://v8.js-dos.com/latest/js-dos.js"></script>
+</head><body>
+<div id="dos"></div>
+<script src="/app.js?b=20251027_093500Z" defer></script>
 </body></html>
+
